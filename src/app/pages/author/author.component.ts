@@ -11,7 +11,7 @@ export class AuthorComponent implements OnInit {
   constructor(public dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getAllAuthors().subscribe();
+    this.dataService.getAuthor(1).subscribe();
   }
 
 }

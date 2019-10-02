@@ -20,8 +20,28 @@ export interface Author {
 
 export class DataService {
 
-  public authors: Author[] = [];
-  public author: Author;
+  public authors: Author[] = [
+    {
+      id: 1,
+      title: 'Руденко Максим',
+      description: 'Найкращий письменник сучасності',
+      media: {
+        id: 1,
+        path: '/var/logos/firstLogo',
+        size: 123456
+      }
+    }
+  ];
+  public author: Author = {
+    id: 1,
+    title: 'Руденко Максим',
+    description: 'Найкращий письменник сучасності',
+    media: {
+      id: 1,
+      path: '/var/logos/firstLogo',
+      size: 123456
+    }
+  };
   public apiUrl = 'http://store-book.tk:8080/';
 
   constructor(private http: HttpClient) { }
@@ -32,12 +52,12 @@ export class DataService {
         console.log('getAllAuthors: ', authors);
         this.authors = authors;
       }),
-      catchError(err => {
+      /*catchError(err => {
         console.log('Error getAllAuthors: ', err.message);
         return throwError(err);
-      })
+      })*/
     );
-  }
+  }ng
 
   getAuthor(id: number): Observable<Author> {
     return this.http.get<Author>(this.apiUrl + 'author/' + id).pipe(
