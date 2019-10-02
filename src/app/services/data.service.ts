@@ -21,7 +21,7 @@ export interface Author {
 export class DataService {
 
   public authors: Author[] = [];
-
+  public author: Author;
   public apiUrl = 'http://store-book.tk:8080/';
 
   constructor(private http: HttpClient) { }
@@ -36,6 +36,19 @@ export class DataService {
         console.log('Error getAllAuthors: ', err.message);
         return throwError(err);
       })
+    );
+  }
+
+  getAuthor(id: number): Observable<Author> {
+    return this.http.get<Author>(this.apiUrl + 'author/' + id).pipe(
+        tap((author: Author) => {
+          console.log('getAuthor: ', author);
+          this.author = author;
+        }),
+        catchError(err => {
+          console.log('getAuthor: ', err.message);
+          return throwError(err);
+        })
     );
   }
 }
