@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError} from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 export interface Author {
   id: number;
@@ -12,6 +14,11 @@ export interface Author {
     path: string;
     size: number;
   };
+}
+
+export interface User {
+  login: string;
+  password: string;
 }
 
 @Injectable({
@@ -43,8 +50,11 @@ export class DataService {
     }
   };
   public apiUrl = 'http://store-book.tk:8080/';
+  public logInCheck = new BehaviorSubject(null);
+  public loggedCheck = false;
+  public loggedUser: User = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, private location: Location) { }
 
   getAllAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(this.apiUrl + 'authors').pipe(
@@ -70,5 +80,37 @@ export class DataService {
           return throwError(err);
         })
     );
+  }
+
+  logIn(user: User) {
+    return this.http.post<User>(this.apiUrl + 'login', user).subscribe(
+        (data: User) => {
+          console.log(data);
+          this.logInCheck.next(data);
+          if (data.login) {
+            this.loggedCheck = true;
+            console.log('logged as :', data.login);
+            this.loggedUser = data;
+          }
+        },
+        err => console.log(err)
+    );
+  }
+
+  resetLogInCheck() {
+    this.logInCheck.next('');
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  signOut() {
+    this.loggedCheck = false;
+    console.log('logged out');
+    this.loggedUser = null;
+    if (this.router.url.indexOf('/admin/') === 0) {
+      this.router.navigate(['/login']);
+    }
   }
 }
