@@ -30,6 +30,16 @@
 
             <!-- Right -->
             <ul class="navbar-nav nav-flex-icons">
+                <li *ngIf="dataService.loggedCheck" class="nav-item">
+                    <a (click)="dataService.signOut()" class="nav-link waves-effect">
+                        <i class="fas fa-sign-out-alt"></i>Sign out
+                    </a>
+                </li>
+                <li *ngIf="!dataService.loggedCheck" class="nav-item">
+                    <a routerLink="/login" class="nav-link waves-effect">
+                        <i class="fas fa-sign-in-alt"></i>Sign in
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link waves-effect" routerLink="/cart">
                         <span class="badge red z-depth-1 mr-1"> 1 </span>
