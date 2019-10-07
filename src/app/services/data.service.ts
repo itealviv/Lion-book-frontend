@@ -23,8 +23,8 @@ export class DataService {
   public authors: Author[] = [
     {
       id: 1,
-      title: 'Руденко Максим',
-      description: 'Найкращий письменник сучасності',
+      title: 'Local Руденко Максим',
+      description: 'Local Найкращий письменник сучасності',
       media: {
         id: 1,
         path: '/var/logos/firstLogo',
@@ -34,8 +34,8 @@ export class DataService {
   ];
   public author: Author = {
     id: 1,
-    title: 'Руденко Максим',
-    description: 'Найкращий письменник сучасності',
+    title: 'Local Руденко Максим',
+    description: 'Local Найкращий письменник сучасності',
     media: {
       id: 1,
       path: '/var/logos/firstLogo',
@@ -52,12 +52,12 @@ export class DataService {
         console.log('getAllAuthors: ', authors);
         this.authors = authors;
       }),
-      /*catchError(err => {
+      catchError(err => {
         console.log('Error getAllAuthors: ', err.message);
         return throwError(err);
-      })*/
+      })
     );
-  }ng
+  }
 
   getAuthor(id: number): Observable<Author> {
     return this.http.get<Author>(this.apiUrl + 'author/' + id).pipe(
