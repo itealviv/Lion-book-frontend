@@ -21,6 +21,7 @@
                             <th class="font-weight-bold">
                                 <strong>Description</strong>
                             </th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,11 @@
                             </td>
                             <td>
                                 <p class="text-muted">{{item.description}}</p>
+                            </td>
+                            <td>
+                                <a routerLink="/author/{{item.id}}">
+                                    <i class="fas fa-link"></i>
+                                </a>
                             </td>
                         </tr>
                         </tbody>
