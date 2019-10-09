@@ -5,6 +5,14 @@ import { tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
+export interface Product {
+    price: number;
+    title: string;
+    description: string;
+    author: Author;
+    media: string;
+}
+
 export interface Author {
   id: number;
   title: string;
